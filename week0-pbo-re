@@ -1,1 +1,52 @@
-test
+1. Membuat segitiga tergantung dengan inputan Height
+def buat_segitiga():
+    height = int(input("Masukkan tinggi segitiga: "))
+    print(f"Height: {height}\n")
+    for i in range(1, height + 1, 2):
+        print(('*' * i).center(height * 2))
+
+if __name__ == "__main__":
+    buat_segitiga()
+
+
+
+
+2. Gunakan loop untuk mengisi dictionary dengan data siswa yang terdiri dari nama dan nilai
+def input_data_siswa():
+    siswa = {}
+    jumlah_siswa = int(input("Masukkan jumlah siswa: "))
+
+    for i in range(1, jumlah_siswa + 1):
+        nama = input(f"Masukkan nama siswa ke-{i}: ")
+        nilai = int(input(f"Masukkan nilai untuk {nama}: "))
+        siswa[nama] = nilai
+
+    print("\nDictionary data siswa:", siswa)
+
+if __name__ == "__main__":
+    input_data_siswa()
+
+
+
+
+3. Membuat sebuah file bernama "Me.txt" menggunakan File I/O (Input/Output) di Python, lalu menuliskan beberapa baris teks ke dalamnya
+def buat_file():
+    try:
+        # Menerima input dari pengguna
+        nama = input("Masukkan Nama: ")
+        nim = input("Masukkan NIM: ")
+        resolusi = input("Masukkan Resolusi di Tahun ini: ")
+
+        # Menulis data ke dalam file Me.txt
+        with open("Me.txt", "w", encoding="utf-8") as file:
+            file.write(f"Nama: {nama}\n")
+            file.write(f"NIM: {nim}\n")
+            file.write(f"Resolusi Tahun Ini: {resolusi}\n")
+
+        print("File 'Me.txt' telah berhasil dibuat!")
+
+    except Exception as e:
+        print(f"Terjadi kesalahan: {e}")
+
+if __name__ == "__main__":
+    buat_file()

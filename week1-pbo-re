@@ -1,0 +1,62 @@
+import math
+
+class Calculator:
+    def __init__(self, value):
+        self.value = value
+
+    def __add__(self, other):
+        return Calculator(self.value + other.value)
+
+    def __sub__(self, other):
+        return Calculator(self.value - other.value)
+
+    def __mul__(self, other):
+        return Calculator(self.value * other.value)
+
+    def __truediv__(self, other):
+        if other.value == 0:
+            raise ValueError("Tidak bisa membagi dengan nol!")
+        return Calculator(self.value / other.value)
+
+    def __pow__(self, other):
+        return Calculator(self.value ** other.value)
+
+    def log(self):
+        if self.value <= 0:
+            raise ValueError("Log hanya bisa diterapkan pada nilai positif!")
+        return math.log(self.value)
+
+    def __repr__(self):
+        return f"Hasil: {self.value}"
+
+# Program Interaktif
+while True:
+    try:
+        num1 = float(input("Masukkan angka pertama: "))
+        calc1 = Calculator(num1)
+        operation = input("Pilih operasi (+, -, *, /, ^, log): ")
+        
+        if operation == "log":
+            print(calc1.log())
+        else:
+            num2 = float(input("Masukkan angka kedua: "))
+            calc2 = Calculator(num2)
+            if operation == "+":
+                print(calc1 + calc2)
+            elif operation == "-":
+                print(calc1 - calc2)
+            elif operation == "*":
+                print(calc1 * calc2)
+            elif operation == "/":
+                print(calc1 / calc2)
+            elif operation == "^":
+                print(calc1 ** calc2)
+            else:
+                print("Operasi tidak dikenali.")
+        
+    except ValueError as e:
+        print(f"Error: {e}")
+    
+    ulang = input("Apakah ingin menghitung lagi? (y/n): ")
+    if ulang.lower() != "y":
+        break

@@ -1,0 +1,60 @@
+class Vehicle:
+    def __init__(self, type, max_speed):
+        self.type = type
+        self.max_speed = max_speed
+
+    def vehicle_info(self):
+        return f'Jenis kendaraannya adalah {self.type} dan memiliki kecepatan maksimal {self.max_speed} km/j'
+
+    def move(self):
+        print('Kendaraan sedang bergerak...')
+
+class Car(Vehicle):
+    def __init__(self, max_speed, brand, door_count):
+        super().__init__('Mobil', max_speed)
+        self.brand = brand
+        self.door_count = door_count
+
+    def car_info(self):
+        return f'Merk : {self.brand}, Jumlah pintu : {self.door_count}'
+
+    def honk(self):
+        print ('tin tinnnn!')
+
+class SportsCar(Car):
+    def __init__ (self, max_speed, brand, horsepower, price):
+        super().__init__(max_speed, brand, 2)
+        self.__horsepower = horsepower
+        self.__price = price
+
+    def get_horsepower(self):
+        return self.__horsepower
+
+    def increase_horsepower(self, value):
+        self.__horsepower += value
+
+    def get_price(self):
+        return self.__price
+
+    def adjust_price(self, value):
+        self.__price += value
+
+    def sports_car_info(self):
+        return f'Merk : {self.brand}\nMax Speed : {self.max_speed} km/j\nHorse Power : {self.__horsepower} HP \nHarga : {self.__price} Juta'
+
+    def race_mode(self):
+        self.max_speed += 120
+        self.__horsepower += 270
+
+if __name__ == "__main__":
+    ferrari = SportsCar(350, 'Ferrari', 1500, 790)
+
+    print(ferrari.sports_car_info())
+
+    choice = str(input('\nApakah anda ingin memasuki mode balap? (yes/no) ')).lower()
+    if choice == 'yes':
+        ferrari.race_mode()
+        print('Horse Power dan Max Speed bertambah!')
+        print(f'Max Speed : {ferrari.max_speed} km/j\nHorse Power : {ferrari.get_horsepower()} HP')
+    else:
+        print('Baiklah, semoga hari mu menyenangkan!')

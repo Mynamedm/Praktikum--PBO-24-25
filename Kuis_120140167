@@ -1,0 +1,46 @@
+import random
+
+size = 3
+total_cells = size * size
+bomb_row = random.randint(0, size - 1)
+bomb_col = random.randint(0, size - 1)
+
+board = [['?' for _ in range(size)] for _ in range(size)]
+
+safe_cells = total_cells - 1
+opened_cells = 0
+
+while True:
+    for row in board:
+        print(" ".join(row))
+
+    try:
+        baris = int(input("Tebak baris (0-2): "))
+        kolom = int(input("Tebak kolom (0-2): "))
+    except ValueError:
+        print("Masukkan angka yang valid!")
+        continue
+
+    if not (0 <= baris < size and 0 <= kolom < size):
+        print("Koordinat di luar jangkauan!")
+        continue
+
+    if baris == bomb_row and kolom == bomb_col:
+        board[baris][kolom] = 'X'
+        print("\nKamu kena bom! GAME OVER")
+
+        for row in board:
+            print(" ".join(row))
+        break
+
+    if board[baris][kolom] == 'O':
+        print("Sudah ditebak sebelumnya!")
+    else:
+        board[baris][kolom] = 'O'
+        opened_cells += 1
+
+    if opened_cells == safe_cells:
+        for row in board:
+            print(" ".join(row))
+        print("\nSelamat, Anda menang! 🎉")
+        break

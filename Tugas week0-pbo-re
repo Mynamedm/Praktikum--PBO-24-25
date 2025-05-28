@@ -1,0 +1,73 @@
+class PertandinganRobot:
+    def __init__(self, ronde):
+        self.ronde = ronde
+
+    def mulai_pertarungan(self, sesi, robot_pertama, robot_kedua):
+        print('Pertandingan dimulai!')
+        print(f'Ronde : {sesi}')
+        print(f'Robot 1 : {robot_pertama.nama}, HP : {robot_pertama.jumlah_hp}')
+        print(f'Robot 2 : {robot_kedua.nama}, HP : {robot_kedua.jumlah_hp}')
+        print('=' * 24)
+        
+        for i in range(1, self.ronde + 1):
+            print('1.Attack 2.Heal 3.Run')
+            aksi1 = input(f'{robot_pertama.nama} memilih : ')
+
+            if aksi1 == '1':
+                robot_pertama.serang(robot_kedua)
+            elif aksi1 == '2':
+                robot_pertama.pulihkan()
+            elif aksi1 == '3':
+                print(f'{robot_pertama.nama} melarikan diri!\n{robot_kedua.nama} menang')
+                return
+
+            if robot_kedua.jumlah_hp == 0:
+                print(f'{robot_pertama.nama} menang!')
+                print(f'{robot_kedua.nama} terkalahkan...')
+                return
+
+            print('1.Attack 2.Heal 3.Run')
+            aksi2 = input(f'{robot_kedua.nama} memilih : ')
+
+            if aksi2 == '1':
+                robot_kedua.serang(robot_pertama)
+            elif aksi2 == '2':
+                robot_kedua.pulihkan()
+            elif aksi2 == '3':
+                print(f'{robot_kedua.nama} melarikan diri!\n{robot_pertama.nama} menang')
+                return
+
+            if robot_pertama.jumlah_hp == 0:
+                print(f'{robot_kedua.nama} menang!')
+                print(f'{robot_pertama.nama} terkalahkan...')
+                return
+
+        if robot_pertama.jumlah_hp > robot_kedua.jumlah_hp:
+            print(f'\nPEMENANG : {robot_pertama.nama} dengan sisa HP {robot_pertama.jumlah_hp} ')
+        elif robot_kedua.jumlah_hp > robot_pertama.jumlah_hp:
+            print(f'\nPEMENANG : {robot_kedua.nama} dengan sisa HP {robot_kedua.jumlah_hp} ')
+        else:
+            print(f'\nPERTANDINGAN SERI!\n{robot_pertama.nama} dan {robot_kedua.nama} imbang...')
+
+class MesinTempur:
+    def __init__(self, nama, jumlah_hp, kekuatan_serang):
+        self.nama = nama
+        self.jumlah_hp = jumlah_hp
+        self.kekuatan_serang = kekuatan_serang
+
+    def serang(self, musuh):
+        kerusakan = self.kekuatan_serang
+        musuh.jumlah_hp -= kerusakan
+        print(f'{self.nama} Menyerang! HP {musuh.nama} tersisa {musuh.jumlah_hp}\n')
+
+    def pulihkan(self):
+        self.jumlah_hp += 5
+        print(f'{self.nama} HP menjadi {self.jumlah_hp}\n')
+
+# Inisialisasi robot
+robot_alpha = MesinTempur('Lewk', 400, 15)
+robot_beta = MesinTempur('Konz', 500, 5)
+
+# Mulai pertandingan
+turnamen = PertandinganRobot(1)
+turnamen.mulai_pertarungan(1, robot_alpha, robot_beta)

@@ -1,0 +1,94 @@
+from abc import ABC, abstractmethod
+
+# Kelas Abstrak
+class Hewan(ABC):
+    def __init__(self, nama, umur):
+        if not nama or not isinstance(umur, int) or umur < 0:
+            raise ValueError("Nama wajib diisi dan umur harus angka >= 0.")
+        self.__nama = nama
+        self.__umur = umur
+
+    @abstractmethod
+    def bersuara(self):
+        pass
+
+    def info(self):
+        return f"{self.__nama} ({self.__umur} tahun)"
+
+# Subclass dengan Polimorfisme
+class Anjing(Hewan):
+    def bersuara(self):
+        return "Guk guk!"
+
+class Kucing(Hewan):
+    def bersuara(self):
+        return "Meong!"
+
+class Gajah(Hewan):
+    def bersuara(self):
+        return "Trumpet!"
+
+# Manajemen Koleksi Hewan
+class KebunBinatang:
+    def __init__(self):
+        self.daftar_hewan = []
+
+    def tambah_hewan(self, objek_hewan):
+        if not isinstance(objek_hewan, Hewan):
+            raise TypeError("Hanya objek turunan Hewan yang diizinkan.")
+        self.daftar_hewan.append(objek_hewan)
+        print(f"{objek_hewan.info()} berhasil dimasukkan ke kebun binatang.")
+
+    def tampilkan_hewan(self):
+        if not self.daftar_hewan:
+            print("Belum ada hewan yang terdaftar.")
+        else:
+            print("\nDaftar Hewan di Kebun Binatang:")
+            for h in self.daftar_hewan:
+                print(f"- {h.info()} bersuara: {h.bersuara()}")
+
+# Fungsi utama
+def jalankan_program():
+    kebun = KebunBinatang()
+
+    while True:
+        print("\nMenu Utama:")
+        print("1. Tambahkan Hewan")
+        print("2. Lihat Daftar Hewan")
+        print("3. Keluar")
+
+        pilih = input("Pilih opsi (1/2/3): ")
+        try:
+            if pilih == '1':
+                tipe = input("Jenis hewan (Anjing/Kucing/Gajah): ").strip().lower()
+                nama_hewan = input("Nama hewan: ").strip()
+                umur_hewan = int(input("Umur hewan: "))
+
+                if tipe == "anjing":
+                    obj = Anjing(nama_hewan, umur_hewan)
+                elif tipe == "kucing":
+                    obj = Kucing(nama_hewan, umur_hewan)
+                elif tipe == "gajah":
+                    obj = Gajah(nama_hewan, umur_hewan)
+                else:
+                    raise ValueError("Jenis hewan tidak dikenali.")
+
+                kebun.tambah_hewan(obj)
+
+            elif pilih == '2':
+                kebun.tampilkan_hewan()
+
+            elif pilih == '3':
+                print("Program selesai. Terima kasih.")
+                break
+
+            else:
+                print("Opsi tidak tersedia. Masukkan angka 1-3.")
+
+        except ValueError as ve:
+            print(f"Kesalahan Input: {ve}")
+        except Exception as e:
+            print(f"Terjadi kesalahan: {e}")
+
+if __name__ == "__main__":
+    jalankan_program()
